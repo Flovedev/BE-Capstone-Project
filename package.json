@@ -1,0 +1,23 @@
+{
+  "name": "be-capstone-project",
+  "version": "1.0.0",
+  "description": "This project will helps you to track of the games you have ever played, including information about the game, when you played it and your overall experience. As well, you will have the possibility to make friends and share with them all the previous information.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Flovedev/BE-Capstone-Project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Flovedev/BE-Capstone-Project/issues"
+  },
+  "homepage": "https://github.com/Flovedev/BE-Capstone-Project#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
