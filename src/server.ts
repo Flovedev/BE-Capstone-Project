@@ -11,6 +11,7 @@ import {
 } from "./errorHandlers";
 // import { newConnectionHandler } from "./socket/index";
 import passport from "passport";
+import igdbRouter from "./api/IGDB";
 // import googleStrategy from "./lib/auth/googleOauth";
 
 const expressServer = Express();
