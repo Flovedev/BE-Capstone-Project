@@ -9,9 +9,9 @@ import {
   notFoundHandler,
   unauthorizedHandler,
 } from "./errorHandlers";
-import { newConnectionHandler } from "./socket/index";
+// import { newConnectionHandler } from "./socket/index";
 import passport from "passport";
-import googleStrategy from "./lib/auth/googleOauth";
+// import googleStrategy from "./lib/auth/googleOauth";
 
 const expressServer = Express();
 
@@ -19,9 +19,9 @@ const expressServer = Express();
 const httpServer = createServer(expressServer);
 const socketioServer = new Server(httpServer);
 
-socketioServer.on("connection", newConnectionHandler);
+// socketioServer.on("connection", newConnectionHandler);
 
-passport.use("google", googleStrategy);
+// passport.use("google", googleStrategy);
 
 //MIDDLEWARES
 expressServer.use(cors());
@@ -30,7 +30,7 @@ expressServer.use(Express.json());
 expressServer.use(passport.initialize());
 
 //ENDPOINTS
-expressServer.use("/users", usersRouter);
+expressServer.use("/igdb", igdbRouter);
 
 //ERROR HANDLERS
 expressServer.use(badRequestHandler);
