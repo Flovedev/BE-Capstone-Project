@@ -1,5 +1,4 @@
 import axios from "axios";
-import AxiosResponse from "axios";
 import Express from "express";
 import { Request, Response, NextFunction } from "express";
 import createHttpError from "http-errors";
@@ -12,11 +11,11 @@ igdbRouter.get(
     try {
       const response = await axios.post(
         process.env.IGDB_URL + "/genres",
-        { fields: "*" },
+        "fields: *; limit: 100;",
         {
           headers: {
             "Client-ID": process.env.CLIENT_ID,
-            Authorization: `Baerer ${process.env.ADMIN_TOKEN}`,
+            Authorization: `Bearer ${process.env.ADMIN_TOKEN}`,
           },
         }
       );
