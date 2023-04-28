@@ -68,4 +68,26 @@ igdbRouter.get(
   }
 );
 
+igdbRouter.get(
+  "/game/:gameId",
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const response = await axios.post(
+        process.env.IGDB_URL + "/games",
+        `fields: name, cover.url, rating, artworks.url, screenshots.url, genres.name, involved_companies.company.name, involved_companies.*, language_supports.language.name, platforms.abbreviation, platforms.name, platforms.platform_logo.url, similar_games.name, similar_games.cover.url, similar_games.rating, summary, videos.name, videos.video_id;
+        where id = ${req.params.gameId};`,
+        {
+          headers: {
+            "Client-ID": process.env.CLIENT_ID,
+            Authorization: `Bearer ${process.env.ADMIN_TOKEN}`,
+          },
+        }
+      );
+      res.json(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
 export default igdbRouter;
