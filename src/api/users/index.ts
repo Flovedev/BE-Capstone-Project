@@ -30,7 +30,26 @@ usersRouter.get("/me", JWTAuthMiddleware, async (req: any, res, next) => {
 });
 
 usersRouter.post(
-  "/",
+  "/session",
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { email, password } = req.body;
+      const user = await UsersModel.checkCredentials(email, password);
+      if (user) {
+        const payload = { _id: user._id };
+        const accessToken = await createAccessToken(payload);
+        res.send({ accessToken, user });
+      } else {
+        next(createHttpError(401, "Credentials are not valid."));
+      }
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+usersRouter.post(
+  "/account",
   checkUserSchema,
   generateBadRequest,
   async (req: Request, res: Response, next: NextFunction) => {
