@@ -46,6 +46,14 @@ UsersSchema.methods.toJSON = function () {
   delete currentUser.createdAt;
   delete currentUser.updatedAt;
   delete currentUser.__v;
+
+  const games = currentUser.games;
+  delete currentUser.games;
+  const friends = currentUser.friends;
+  delete currentUser.friends;
+  currentUser.games = games;
+  currentUser.friends = friends;
+
   return currentUser;
 };
 

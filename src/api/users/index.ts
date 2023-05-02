@@ -4,6 +4,7 @@ import { Request, Response, NextFunction } from "express";
 import UsersModel from "./model";
 import { checkUserSchema, generateBadRequest } from "./validation";
 import { createAccessToken } from "../../lib/auth/tools";
+import { JWTAuthMiddleware } from "../../lib/auth/jwt";
 
 const usersRouter = Express.Router();
 
@@ -18,6 +19,15 @@ usersRouter.get(
     }
   }
 );
+
+usersRouter.get("/me", JWTAuthMiddleware, async (req: any, res, next) => {
+  try {
+    const user = await UsersModel.findById(req.user!._id);
+    res.send(user);
+  } catch (error) {
+    next(error);
+  }
+});
 
 usersRouter.post(
   "/",
