@@ -52,6 +52,6 @@ export const genericErrorHandler: ErrorRequestHandler = (
   res,
   next
 ) => {
-  console.log(err);
+  // console.log(err);
   res.status(500).send({ message: "We gonna fix this ASAP!" });
 };

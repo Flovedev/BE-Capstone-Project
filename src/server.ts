@@ -12,6 +12,7 @@ import {
 import passport from "passport";
 import igdbRouter from "./api/IGDB";
 import usersRouter from "./api/users";
+import gamesRouter from "./api/games";
 // import { newConnectionHandler } from "./socket/index";
 // import googleStrategy from "./lib/auth/googleOauth";
 
@@ -34,6 +35,7 @@ expressServer.use(passport.initialize());
 //ENDPOINTS
 expressServer.use("/igdb", igdbRouter);
 expressServer.use("/users", usersRouter);
+expressServer.use("/games", gamesRouter);
 
 //ERROR HANDLERS
 expressServer.use(badRequestHandler);
