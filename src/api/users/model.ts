@@ -19,7 +19,7 @@ const UsersSchema = new Schema(
       pending: { type: [String], default: [] },
       over: { type: [String], default: [] },
     },
-    friends: {
+    social: {
       sent: { type: [String], default: [] },
       pending: { type: [String], default: [] },
       friends: { type: [String], default: [] },
