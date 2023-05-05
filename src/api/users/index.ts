@@ -5,6 +5,7 @@ import UsersModel from "./model";
 import { checkUserSchema, generateBadRequest } from "./validation";
 import { createAccessToken } from "../../lib/auth/tools";
 import { JWTAuthMiddleware } from "../../lib/auth/jwt";
+import bcrypt from "bcrypt";
 
 const usersRouter = Express.Router();
 
@@ -28,6 +29,43 @@ usersRouter.get("/me", JWTAuthMiddleware, async (req: any, res, next) => {
     next(error);
   }
 });
+
+usersRouter.put(
+  "/me",
+  JWTAuthMiddleware,
+  async (req: any, res: Response, next: NextFunction) => {
+    try {
+      const updatedUser = (await UsersModel.findByIdAndUpdate(
+        req.user!._id,
+        req.body,
+        { new: true, runValidators: true }
+      )) as any;
+      if (!updatedUser) {
+        next(
+          createHttpError(404, `User with id id ${req.user!._id} not found!`)
+        );
+      }
+
+      Object.keys(req.body).forEach((key) => {
+        if (key !== "password") {
+          updatedUser[key] = req.body[key];
+        }
+      });
+
+      if (req.body.password) {
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(req.body.password, salt);
+        // console.log("hashed pass", hashedPassword);
+        updatedUser.password = hashedPassword;
+      }
+      const savedUser = await updatedUser.save();
+
+      res.send(savedUser);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 usersRouter.post(
   "/session",
