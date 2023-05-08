@@ -3,8 +3,8 @@ import { Document, Model, Schema, model } from "mongoose";
 interface IOver extends Document {
   _id: number;
   name: string;
-  cover: string;
-  rating: string;
+  cover?: string;
+  rating?: string;
   createdAt?: Date;
   updatedAt?: Date;
 }

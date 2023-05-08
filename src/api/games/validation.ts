@@ -22,12 +22,14 @@ const overSchema: Schema<"isString" | "in"> = {
   },
   cover: {
     in: "body" as Location,
+    optional: { options: { nullable: true } },
     isString: {
       errorMessage: "cover is a mandatory field and needs to be a string!",
     },
   },
   rating: {
     in: "body" as Location,
+    optional: { options: { nullable: true } },
     isNumeric: {
       errorMessage: "rating is a mandatory field and needs to be a number!",
     },
