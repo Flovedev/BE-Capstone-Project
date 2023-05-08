@@ -15,9 +15,30 @@ const UsersSchema = new Schema(
         "https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg",
     },
     games: {
-      favourites: { type: [String], default: [] },
-      pending: { type: [String], default: [] },
-      over: { type: [String], default: [] },
+      favourites: [
+        {
+          _id: Number,
+          name: String,
+          cover: String,
+          rating: String,
+        },
+      ],
+      pending: [
+        {
+          _id: Number,
+          name: String,
+          cover: String,
+          rating: String,
+        },
+      ],
+      over: [
+        {
+          _id: Number,
+          name: String,
+          cover: String,
+          rating: String,
+        },
+      ],
     },
     social: {
       sent: { type: [String], default: [] },

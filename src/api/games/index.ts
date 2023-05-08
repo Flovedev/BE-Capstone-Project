@@ -2,37 +2,50 @@ import Express from "express";
 import createHttpError from "http-errors";
 import { Request, Response, NextFunction } from "express";
 import UsersModel from "../users/model";
+import { OversModel, IOver } from "./model";
 import { JWTAuthMiddleware } from "../../lib/auth/jwt";
+import { checkOversSchema, generateBadRequest } from "./validation";
 
 const gamesRouter = Express.Router();
 
 gamesRouter.post(
-  "/favourites/:gameId",
+  "/favourites",
   JWTAuthMiddleware,
-  async (req: any, res, next) => {
+  checkOversSchema,
+  generateBadRequest,
+  async (req: any, res: Response, next: NextFunction) => {
     try {
+      const { _id, name, cover, rating } = req.body;
+      const newFavourite: IOver = new OversModel({
+        _id,
+        name,
+        cover,
+        rating,
+      });
+
       const checkFavourite = await UsersModel.findOne({
         _id: req.user!._id,
-        "games.favourites": req.params.gameId,
+        "games.favourites": { $elemMatch: { _id: newFavourite._id } },
       });
 
       if (!checkFavourite) {
         await UsersModel.findByIdAndUpdate(
-          req.user!._id,
-          { $push: { "games.favourites": req.params.gameId } },
+          { _id: req.user!._id },
+          { $push: { "games.favourites": newFavourite } },
           { new: true, runValidators: true }
         );
+
         res.send({
-          message: `Game with id ${req.params.gameId} added to favourites`,
+          message: `Game with id ${newFavourite._id} added to favourites`,
         });
       } else {
         await UsersModel.findByIdAndUpdate(
-          req.user!._id,
-          { $pull: { "games.favourites": req.params.gameId } },
+          { _id: req.user!._id },
+          { $pull: { "games.favourites": { _id: newFavourite._id } } },
           { new: true, runValidators: true }
         );
         res.send({
-          message: `Game with id ${req.params.gameId} removed from favourites`,
+          message: `Game with id ${newFavourite._id} removed from favourites`,
         });
       }
     } catch (error) {
@@ -42,35 +55,45 @@ gamesRouter.post(
 );
 
 gamesRouter.post(
-  "/over/:gameId",
+  "/over",
   JWTAuthMiddleware,
-  async (req: any, res, next) => {
+  checkOversSchema,
+  generateBadRequest,
+  async (req: any, res: Response, next: NextFunction) => {
     try {
+      const { _id, name, cover, rating } = req.body;
+      const newOver: IOver = new OversModel({
+        _id,
+        name,
+        cover,
+        rating,
+      });
+
       const checkOver = await UsersModel.findOne({
         _id: req.user!._id,
-        "games.over": req.params.gameId,
+        "games.over": { $elemMatch: { _id: newOver._id } },
       });
 
       if (!checkOver) {
         await UsersModel.findByIdAndUpdate(
           req.user!._id,
           {
-            $push: { "games.over": req.params.gameId },
-            $pull: { "games.pending": req.params.gameId },
+            $push: { "games.over": newOver },
+            $pull: { "games.pending": { _id: newOver._id } },
           },
           { new: true, runValidators: true }
         );
         res.send({
-          message: `Game with id ${req.params.gameId} added to over`,
+          message: `Game with id ${newOver._id} added to over`,
         });
       } else {
         await UsersModel.findByIdAndUpdate(
           req.user!._id,
-          { $pull: { "games.over": req.params.gameId } },
+          { $pull: { "games.over": { _id: newOver._id } } },
           { new: true, runValidators: true }
         );
         res.send({
-          message: `Game with id ${req.params.gameId} removed from over`,
+          message: `Game with id ${newOver._id} removed from over`,
         });
       }
     } catch (error) {
@@ -80,35 +103,45 @@ gamesRouter.post(
 );
 
 gamesRouter.post(
-  "/pending/:gameId",
+  "/pending",
   JWTAuthMiddleware,
-  async (req: any, res, next) => {
+  checkOversSchema,
+  generateBadRequest,
+  async (req: any, res: Response, next: NextFunction) => {
     try {
+      const { _id, name, cover, rating } = req.body;
+      const newPending: IOver = new OversModel({
+        _id,
+        name,
+        cover,
+        rating,
+      });
+
       const checkPending = await UsersModel.findOne({
         _id: req.user!._id,
-        "games.pending": req.params.gameId,
+        "games.pending": { $elemMatch: { _id: newPending._id } },
       });
 
       if (!checkPending) {
         await UsersModel.findByIdAndUpdate(
           req.user!._id,
           {
-            $push: { "games.pending": req.params.gameId },
-            $pull: { "games.over": req.params.gameId },
+            $push: { "games.pending": newPending },
+            $pull: { "games.over": { _id: newPending._id } },
           },
           { new: true, runValidators: true }
         );
         res.send({
-          message: `Game with id ${req.params.gameId} added to pending`,
+          message: `Game with id ${newPending._id} added to pending`,
         });
       } else {
         await UsersModel.findByIdAndUpdate(
           req.user!._id,
-          { $pull: { "games.pending": req.params.gameId } },
+          { $pull: { "games.pending": { _id: newPending._id } } },
           { new: true, runValidators: true }
         );
         res.send({
-          message: `Game with id ${req.params.gameId} removed from pending`,
+          message: `Game with id ${newPending._id} removed from pending`,
         });
       }
     } catch (error) {

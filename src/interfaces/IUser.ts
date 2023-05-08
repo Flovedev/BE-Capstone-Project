@@ -6,9 +6,9 @@ interface IUser {
   password: string;
   avatar?: string;
   games?: {
-    favourites?: string[];
-    pending?: string[];
-    over?: string[];
+    favourites?: IOver[];
+    pending?: IOver[];
+    over?: IOver[];
   };
   friends?: {
     sent?: string[];
@@ -24,4 +24,13 @@ export interface UserModel extends Model<UserDocument> {
     email: string,
     password: string
   ): Promise<UserDocument | null>;
+}
+
+export interface IOver {
+  _id: number;
+  name: string;
+  cover: string;
+  rating: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
