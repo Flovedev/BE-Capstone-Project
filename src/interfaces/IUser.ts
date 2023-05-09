@@ -27,7 +27,7 @@ export interface UserModel extends Model<UserDocument> {
 }
 
 export interface IOver {
-  _id: number;
+  id: number;
   name: string;
   cover: string;
   rating: string;

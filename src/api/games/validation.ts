@@ -8,10 +8,10 @@ import {
 } from "express-validator";
 
 const overSchema: Schema<"isString" | "in"> = {
-  _id: {
+  id: {
     in: "body" as Location,
     isNumeric: {
-      errorMessage: "_id is a mandatory field and needs to be a number!",
+      errorMessage: "id is a mandatory field and needs to be a number!",
     },
   },
   name: {

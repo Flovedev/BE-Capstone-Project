@@ -17,7 +17,7 @@ const UsersSchema = new Schema(
     games: {
       favourites: [
         {
-          _id: Number,
+          id: Number,
           name: String,
           cover: String,
           rating: String,
@@ -25,7 +25,7 @@ const UsersSchema = new Schema(
       ],
       pending: [
         {
-          _id: Number,
+          id: Number,
           name: String,
           cover: String,
           rating: String,
@@ -33,7 +33,7 @@ const UsersSchema = new Schema(
       ],
       over: [
         {
-          _id: Number,
+          id: Number,
           name: String,
           cover: String,
           rating: String,

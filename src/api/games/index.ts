@@ -15,9 +15,9 @@ gamesRouter.post(
   generateBadRequest,
   async (req: any, res: Response, next: NextFunction) => {
     try {
-      const { _id, name, cover, rating } = req.body;
+      const { id, name, cover, rating } = req.body;
       const newFavourite: IOver = new OversModel({
-        _id,
+        id,
         name,
         cover,
         rating,
@@ -25,7 +25,7 @@ gamesRouter.post(
 
       const checkFavourite = await UsersModel.findOne({
         _id: req.user!._id,
-        "games.favourites": { $elemMatch: { _id: newFavourite._id } },
+        "games.favourites": { $elemMatch: { id: newFavourite.id } },
       });
 
       if (!checkFavourite) {
@@ -36,16 +36,16 @@ gamesRouter.post(
         );
 
         res.send({
-          message: `Game with id ${newFavourite._id} added to favourites`,
+          message: `Game with id ${newFavourite.id} added to favourites`,
         });
       } else {
         await UsersModel.findByIdAndUpdate(
           { _id: req.user!._id },
-          { $pull: { "games.favourites": { _id: newFavourite._id } } },
+          { $pull: { "games.favourites": { id: newFavourite.id } } },
           { new: true, runValidators: true }
         );
         res.send({
-          message: `Game with id ${newFavourite._id} removed from favourites`,
+          message: `Game with id ${newFavourite.id} removed from favourites`,
         });
       }
     } catch (error) {
@@ -61,9 +61,9 @@ gamesRouter.post(
   generateBadRequest,
   async (req: any, res: Response, next: NextFunction) => {
     try {
-      const { _id, name, cover, rating } = req.body;
+      const { id, name, cover, rating } = req.body;
       const newOver: IOver = new OversModel({
-        _id,
+        id,
         name,
         cover,
         rating,
@@ -71,7 +71,7 @@ gamesRouter.post(
 
       const checkOver = await UsersModel.findOne({
         _id: req.user!._id,
-        "games.over": { $elemMatch: { _id: newOver._id } },
+        "games.over": { $elemMatch: { id: newOver.id } },
       });
 
       if (!checkOver) {
@@ -79,21 +79,21 @@ gamesRouter.post(
           req.user!._id,
           {
             $push: { "games.over": newOver },
-            $pull: { "games.pending": { _id: newOver._id } },
+            $pull: { "games.pending": { id: newOver.id } },
           },
           { new: true, runValidators: true }
         );
         res.send({
-          message: `Game with id ${newOver._id} added to over`,
+          message: `Game with id ${newOver.id} added to over`,
         });
       } else {
         await UsersModel.findByIdAndUpdate(
           req.user!._id,
-          { $pull: { "games.over": { _id: newOver._id } } },
+          { $pull: { "games.over": { id: newOver.id } } },
           { new: true, runValidators: true }
         );
         res.send({
-          message: `Game with id ${newOver._id} removed from over`,
+          message: `Game with id ${newOver.id} removed from over`,
         });
       }
     } catch (error) {
@@ -109,9 +109,9 @@ gamesRouter.post(
   generateBadRequest,
   async (req: any, res: Response, next: NextFunction) => {
     try {
-      const { _id, name, cover, rating } = req.body;
+      const { id, name, cover, rating } = req.body;
       const newPending: IOver = new OversModel({
-        _id,
+        id,
         name,
         cover,
         rating,
@@ -119,7 +119,7 @@ gamesRouter.post(
 
       const checkPending = await UsersModel.findOne({
         _id: req.user!._id,
-        "games.pending": { $elemMatch: { _id: newPending._id } },
+        "games.pending": { $elemMatch: { id: newPending.id } },
       });
 
       if (!checkPending) {
@@ -127,21 +127,21 @@ gamesRouter.post(
           req.user!._id,
           {
             $push: { "games.pending": newPending },
-            $pull: { "games.over": { _id: newPending._id } },
+            $pull: { "games.over": { id: newPending.id } },
           },
           { new: true, runValidators: true }
         );
         res.send({
-          message: `Game with id ${newPending._id} added to pending`,
+          message: `Game with id ${newPending.id} added to pending`,
         });
       } else {
         await UsersModel.findByIdAndUpdate(
           req.user!._id,
-          { $pull: { "games.pending": { _id: newPending._id } } },
+          { $pull: { "games.pending": { id: newPending.id } } },
           { new: true, runValidators: true }
         );
         res.send({
-          message: `Game with id ${newPending._id} removed from pending`,
+          message: `Game with id ${newPending.id} removed from pending`,
         });
       }
     } catch (error) {

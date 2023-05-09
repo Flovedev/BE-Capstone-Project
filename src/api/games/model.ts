@@ -1,7 +1,7 @@
 import { Document, Model, Schema, model } from "mongoose";
 
 interface IOver extends Document {
-  _id: number;
+  id: number;
   name: string;
   cover?: string;
   rating?: string;
@@ -11,7 +11,7 @@ interface IOver extends Document {
 
 const OversSchema = new Schema<IOver, Model<IOver>, IOver>(
   {
-    _id: { type: Number, required: true },
+    id: { type: Number, required: true },
     name: { type: String, required: true },
     cover: { type: String, required: true },
     rating: { type: String, required: true },
