@@ -5,6 +5,7 @@ interface IUser {
   email: string;
   password: string;
   avatar?: string;
+  background?: string;
   games?: {
     favourites?: IOver[];
     pending?: IOver[];

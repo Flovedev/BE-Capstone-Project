@@ -6,6 +6,10 @@ import { checkUserSchema, generateBadRequest } from "./validation";
 import { createAccessToken } from "../../lib/auth/tools";
 import { JWTAuthMiddleware } from "../../lib/auth/jwt";
 import bcrypt from "bcrypt";
+import multer from "multer";
+import { v2 as cloudinary } from "cloudinary";
+import { CloudinaryStorage } from "multer-storage-cloudinary";
+import { Params } from "express-serve-static-core";
 
 const usersRouter = Express.Router();
 
@@ -67,6 +71,25 @@ usersRouter.put(
   }
 );
 
+usersRouter.delete(
+  "/me",
+  JWTAuthMiddleware,
+  async (req: any, res: Response, next: NextFunction) => {
+    try {
+      const user = await UsersModel.findById(req.user!._id);
+      if (!user) {
+        next(createHttpError(404, `User doesn't exist.`));
+      } else {
+        await UsersModel.findByIdAndDelete(req.user?._id);
+      }
+
+      res.send(204);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 usersRouter.post(
   "/session",
   async (req: Request, res: Response, next: NextFunction) => {
@@ -92,18 +115,6 @@ usersRouter.post(
   generateBadRequest,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const checkUsername = await UsersModel.findOne({
-        username: req.body.username,
-      });
-      if (checkUsername) {
-        next(
-          createHttpError(
-            404,
-            `Username ${req.body.username} is already in use!`
-          )
-        );
-      }
-
       const checkEmail = await UsersModel.findOne({ email: req.body.email });
       if (checkEmail) {
         next(
@@ -116,6 +127,34 @@ usersRouter.post(
         const accessToken = await createAccessToken(payload);
         res.status(201).send({ user: newUser, accessToken: accessToken });
       }
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+const cloudinaryUploader = multer({
+  storage: new CloudinaryStorage({
+    cloudinary,
+    params: {
+      folder: "Games-over",
+    } as Params,
+  }),
+}).single("avatar");
+
+usersRouter.post(
+  "/me/avatar",
+  JWTAuthMiddleware,
+  cloudinaryUploader,
+  async (req: any, res, next) => {
+    try {
+      const user = await UsersModel.findByIdAndUpdate(
+        req.user!._id,
+        { ...req.body, avatar: req.file.path },
+        { new: true, runValidators: true }
+      );
+      // avatar: req.file.path
+      res.send({ user });
     } catch (error) {
       next(error);
     }

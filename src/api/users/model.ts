@@ -14,6 +14,11 @@ const UsersSchema = new Schema(
       default:
         "https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg",
     },
+    background: {
+      type: String,
+      default:
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/GOODS_South_field.jpg/1024px-GOODS_South_field.jpg",
+    },
     games: {
       favourites: [
         {
