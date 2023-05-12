@@ -45,9 +45,7 @@ usersRouter.put(
         { new: true, runValidators: true }
       )) as any;
       if (!updatedUser) {
-        next(
-          createHttpError(404, `User with id id ${req.user!._id} not found!`)
-        );
+        next(createHttpError(404, `User with id ${req.user!._id} not found!`));
       }
 
       Object.keys(req.body).forEach((key) => {
@@ -155,6 +153,23 @@ usersRouter.post(
       );
       // avatar: req.file.path
       res.send({ user });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+usersRouter.post(
+  "/me/background",
+  JWTAuthMiddleware,
+  async (req: any, res, next) => {
+    try {
+      const user = await UsersModel.findByIdAndUpdate(
+        { _id: req.user!._id },
+        { $set: { background: req.body.bgLink } },
+        { new: true, runValidators: true }
+      );
+      res.send(user);
     } catch (error) {
       next(error);
     }
