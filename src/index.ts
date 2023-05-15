@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const { httpServer, expressServer } = require("./server");
 
 const port = process.env.PORT || 3001;
+
 mongoose.connect(process.env.MONGO_URL as string);
 
 mongoose.connection.on("connected", () => {
