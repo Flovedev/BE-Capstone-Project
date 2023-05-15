@@ -1,5 +1,4 @@
 import Express from "express";
-import { Server } from "socket.io";
 import { createServer } from "http";
 import cors from "cors";
 import {
@@ -13,16 +12,11 @@ import passport from "passport";
 import igdbRouter from "./api/IGDB";
 import usersRouter from "./api/users";
 import gamesRouter from "./api/games";
-// import { newConnectionHandler } from "./socket/index";
+
 // import googleStrategy from "./lib/auth/googleOauth";
 
 const expressServer = Express();
-
-// SOCKET.IO
 const httpServer = createServer(expressServer);
-const socketioServer = new Server(httpServer);
-
-// socketioServer.on("connection", newConnectionHandler);
 
 // passport.use("google", googleStrategy);
 
