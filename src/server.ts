@@ -24,7 +24,7 @@ const whitelist = [process.env.FE_DEV_URL, process.env.FE_PROD_URL];
 //MIDDLEWARES
 expressServer.use(
   cors({
-    origin: (currentOrigin, corsNext) => {
+    origin: (currentOrigin: any, corsNext: any) => {
       // corsNext(null, true);
       if (!currentOrigin || whitelist.indexOf(currentOrigin) !== -1) {
         corsNext(null, true);
