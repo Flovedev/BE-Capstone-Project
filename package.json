@@ -7,7 +7,7 @@
     "test": "jest --watchAll",
     "dev": "nodemon -r dotenv/config ./src/index.ts",
     "build": "tsc",
-    "start": "node ./src/index.ts"
+    "start": "node ./dist/index.js"
   },
   "repository": {
     "type": "git",
