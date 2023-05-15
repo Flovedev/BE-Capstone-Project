@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "This project will helps you to track of the games you have ever played, including information about the game, when you played it and your overall experience. As well, you will have the possibility to make friends and share with them all the previous information.",
   "main": "index.ts",
+  "types": "build/server.d.ts",
   "scripts": {
     "test": "jest --watchAll",
     "dev": "nodemon -r dotenv/config ./src/index.ts",
