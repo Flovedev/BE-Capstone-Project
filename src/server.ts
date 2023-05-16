@@ -13,12 +13,12 @@ import igdbRouter from "./api/IGDB";
 import usersRouter from "./api/users";
 import gamesRouter from "./api/games";
 import createHttpError from "http-errors";
-// import googleStrategy from "./lib/auth/googleOauth";
+import googleStrategy from "./lib/auth/googleOauth";
 
 const expressServer = Express();
 const httpServer = createServer(expressServer);
 const whitelist = [process.env.FE_DEV_URL, process.env.FE_PROD_URL];
-// passport.use("google", googleStrategy);
+passport.use("google", googleStrategy);
 
 //MIDDLEWARES
 expressServer.use(

@@ -10,6 +10,7 @@ import multer from "multer";
 import { v2 as cloudinary } from "cloudinary";
 import { CloudinaryStorage } from "multer-storage-cloudinary";
 import { Params } from "express-serve-static-core";
+import passport from "passport";
 
 const usersRouter = Express.Router();
 
@@ -125,6 +126,24 @@ usersRouter.post(
         const accessToken = await createAccessToken(payload);
         res.status(201).send({ user: newUser, accessToken: accessToken });
       }
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+usersRouter.get(
+  "/googleLogin",
+  passport.authenticate("google", { scope: ["profile", "email"] })
+);
+
+usersRouter.get(
+  "/googleRedirect",
+  passport.authenticate("google", { session: false }),
+  (req: any, res: Response, next: NextFunction) => {
+    try {
+      res.cookie("accessToken", req.user!.accessToken);
+      res.redirect(`${process.env.FE_DEV_URL}`);
     } catch (error) {
       next(error);
     }
