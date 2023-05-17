@@ -9,6 +9,7 @@ const UsersSchema = new Schema(
     username: { type: String, require: true },
     email: { type: String, require: true },
     password: { type: String, require: false },
+    info: { type: String, default: "Ey listen! I'm new here!" },
     avatar: {
       type: String,
       default:
