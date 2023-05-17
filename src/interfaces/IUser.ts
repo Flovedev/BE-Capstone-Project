@@ -6,6 +6,7 @@ export interface IUser {
   password: string;
   avatar?: string;
   background?: string;
+  info?: string;
   games?: {
     favourites?: IOver[];
     pending?: IOver[];
@@ -32,6 +33,22 @@ export interface IOver {
   name: string;
   cover: string;
   rating: string;
+  release_dates: IRelease[];
+  platforms: IPlatform[];
+  genres: IGenres[];
   createdAt?: Date;
   updatedAt?: Date;
+}
+
+export interface IPlatform {
+  abbreviation: string;
+  name: string;
+}
+
+export interface IGenres {
+  name: string;
+}
+
+export interface IRelease {
+  date: string;
 }

@@ -34,6 +34,28 @@ const overSchema: Schema<"isString" | "in"> = {
       errorMessage: "rating is a mandatory field and needs to be a number!",
     },
   },
+  release_date: {
+    in: "body" as Location,
+    optional: { options: { nullable: true } },
+    isString: {
+      errorMessage:
+        "release_date is a mandatory field and needs to be a string!",
+    },
+  },
+  platforms: {
+    in: "body" as Location,
+    optional: { options: { nullable: true } },
+    isArray: {
+      errorMessage: "platforms is a mandatory field and needs to be an array!",
+    },
+  },
+  genres: {
+    in: "body" as Location,
+    optional: { options: { nullable: true } },
+    isArray: {
+      errorMessage: "genres is a mandatory field and needs to be an array!",
+    },
+  },
 };
 
 export const checkOversSchema = checkSchema(overSchema);

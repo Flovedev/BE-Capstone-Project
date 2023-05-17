@@ -5,6 +5,14 @@ interface IOver extends Document {
   name: string;
   cover?: string;
   rating?: string;
+  release_date?: string;
+  platforms?: {
+    name: string;
+    abbreviation: string;
+  }[];
+  genres?: {
+    name: string;
+  }[];
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -15,6 +23,9 @@ const OversSchema = new Schema<IOver, Model<IOver>, IOver>(
     name: { type: String, required: true },
     cover: { type: String, required: true },
     rating: { type: String, required: true },
+    release_date: { type: String, required: true },
+    platforms: { type: Array, required: true },
+    genres: { type: Array, required: true },
   },
   { timestamps: true }
 );

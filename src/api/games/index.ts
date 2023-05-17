@@ -15,12 +15,16 @@ gamesRouter.post(
   generateBadRequest,
   async (req: any, res: Response, next: NextFunction) => {
     try {
-      const { id, name, cover, rating } = req.body;
+      const { id, name, cover, rating, release_date, platforms, genres } =
+        req.body;
       const newFavourite: IOver = new OversModel({
         id,
         name,
         cover,
         rating,
+        release_date,
+        platforms,
+        genres,
       });
 
       const checkFavourite = await UsersModel.findOne({
@@ -61,12 +65,16 @@ gamesRouter.post(
   generateBadRequest,
   async (req: any, res: Response, next: NextFunction) => {
     try {
-      const { id, name, cover, rating } = req.body;
+      const { id, name, cover, rating, release_date, platforms, genres } =
+        req.body;
       const newOver: IOver = new OversModel({
         id,
         name,
         cover,
         rating,
+        release_date,
+        platforms,
+        genres,
       });
 
       const checkOver = await UsersModel.findOne({
@@ -109,12 +117,16 @@ gamesRouter.post(
   generateBadRequest,
   async (req: any, res: Response, next: NextFunction) => {
     try {
-      const { id, name, cover, rating } = req.body;
+      const { id, name, cover, rating, release_date, platforms, genres } =
+        req.body;
       const newPending: IOver = new OversModel({
         id,
         name,
         cover,
         rating,
+        release_date,
+        platforms,
+        genres,
       });
 
       const checkPending = await UsersModel.findOne({
