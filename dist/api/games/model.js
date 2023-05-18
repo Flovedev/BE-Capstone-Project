@@ -7,6 +7,9 @@ const OversSchema = new mongoose_1.Schema({
     name: { type: String, required: true },
     cover: { type: String, required: true },
     rating: { type: String, required: true },
+    release_date: { type: String, required: true },
+    platforms: { type: Array, required: true },
+    genres: { type: Array, required: true },
 }, { timestamps: true });
 const OversModel = (0, mongoose_1.model)("Over", OversSchema);
 exports.OversModel = OversModel;

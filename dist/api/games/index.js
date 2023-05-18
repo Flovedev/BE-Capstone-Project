@@ -20,12 +20,15 @@ const validation_1 = require("./validation");
 const gamesRouter = express_1.default.Router();
 gamesRouter.post("/favourites", jwt_1.JWTAuthMiddleware, validation_1.checkOversSchema, validation_1.generateBadRequest, (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { id, name, cover, rating } = req.body;
+        const { id, name, cover, rating, release_date, platforms, genres } = req.body;
         const newFavourite = new model_2.OversModel({
             id,
             name,
             cover,
             rating,
+            release_date,
+            platforms,
+            genres,
         });
         const checkFavourite = yield model_1.default.findOne({
             _id: req.user._id,
@@ -50,12 +53,15 @@ gamesRouter.post("/favourites", jwt_1.JWTAuthMiddleware, validation_1.checkOvers
 }));
 gamesRouter.post("/over", jwt_1.JWTAuthMiddleware, validation_1.checkOversSchema, validation_1.generateBadRequest, (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { id, name, cover, rating } = req.body;
+        const { id, name, cover, rating, release_date, platforms, genres } = req.body;
         const newOver = new model_2.OversModel({
             id,
             name,
             cover,
             rating,
+            release_date,
+            platforms,
+            genres,
         });
         const checkOver = yield model_1.default.findOne({
             _id: req.user._id,
@@ -83,12 +89,15 @@ gamesRouter.post("/over", jwt_1.JWTAuthMiddleware, validation_1.checkOversSchema
 }));
 gamesRouter.post("/pending", jwt_1.JWTAuthMiddleware, validation_1.checkOversSchema, validation_1.generateBadRequest, (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { id, name, cover, rating } = req.body;
+        const { id, name, cover, rating, release_date, platforms, genres } = req.body;
         const newPending = new model_2.OversModel({
             id,
             name,
             cover,
             rating,
+            release_date,
+            platforms,
+            genres,
         });
         const checkPending = yield model_1.default.findOne({
             _id: req.user._id,

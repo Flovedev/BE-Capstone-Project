@@ -19,6 +19,7 @@ const UsersSchema = new Schema({
     username: { type: String, require: true },
     email: { type: String, require: true },
     password: { type: String, require: false },
+    info: { type: String, default: "Ey listen! I'm new here!" },
     avatar: {
         type: String,
         default: "https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg",
@@ -34,6 +35,9 @@ const UsersSchema = new Schema({
                 name: String,
                 cover: String,
                 rating: String,
+                release_date: String,
+                platforms: Array,
+                genres: Array,
             },
         ],
         pending: [
@@ -42,6 +46,9 @@ const UsersSchema = new Schema({
                 name: String,
                 cover: String,
                 rating: String,
+                release_date: String,
+                platforms: Array,
+                genres: Array,
             },
         ],
         over: [
@@ -50,6 +57,9 @@ const UsersSchema = new Schema({
                 name: String,
                 cover: String,
                 rating: String,
+                release_date: String,
+                platforms: Array,
+                genres: Array,
             },
         ],
     },

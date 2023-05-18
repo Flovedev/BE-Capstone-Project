@@ -22,6 +22,7 @@ const bcrypt_1 = __importDefault(require("bcrypt"));
 const multer_1 = __importDefault(require("multer"));
 const cloudinary_1 = require("cloudinary");
 const multer_storage_cloudinary_1 = require("multer-storage-cloudinary");
+const passport_1 = __importDefault(require("passport"));
 const usersRouter = express_1.default.Router();
 usersRouter.get("/", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -116,6 +117,16 @@ usersRouter.post("/account", validation_1.checkUserSchema, validation_1.generate
         next(error);
     }
 }));
+usersRouter.get("/googleLogin", passport_1.default.authenticate("google", { scope: ["profile", "email"] }));
+usersRouter.get("/googleRedirect", passport_1.default.authenticate("google", { session: false }), (req, res, next) => {
+    try {
+        res.cookie("accessToken", req.user.accessToken);
+        res.redirect(`${process.env.FE_DEV_URL}`);
+    }
+    catch (error) {
+        next(error);
+    }
+});
 const cloudinaryUploader = (0, multer_1.default)({
     storage: new multer_storage_cloudinary_1.CloudinaryStorage({
         cloudinary: cloudinary_1.v2,

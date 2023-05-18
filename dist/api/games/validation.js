@@ -33,6 +33,27 @@ const overSchema = {
             errorMessage: "rating is a mandatory field and needs to be a number!",
         },
     },
+    release_date: {
+        in: "body",
+        optional: { options: { nullable: true } },
+        isString: {
+            errorMessage: "release_date is a mandatory field and needs to be a string!",
+        },
+    },
+    platforms: {
+        in: "body",
+        optional: { options: { nullable: true } },
+        isArray: {
+            errorMessage: "platforms is a mandatory field and needs to be an array!",
+        },
+    },
+    genres: {
+        in: "body",
+        optional: { options: { nullable: true } },
+        isArray: {
+            errorMessage: "genres is a mandatory field and needs to be an array!",
+        },
+    },
 };
 exports.checkOversSchema = (0, express_validator_1.checkSchema)(overSchema);
 const generateBadRequest = (request, response, next) => {

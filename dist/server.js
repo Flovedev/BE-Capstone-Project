@@ -13,13 +13,13 @@ const IGDB_1 = __importDefault(require("./api/IGDB"));
 const users_1 = __importDefault(require("./api/users"));
 const games_1 = __importDefault(require("./api/games"));
 const http_errors_1 = __importDefault(require("http-errors"));
-// import googleStrategy from "./lib/auth/googleOauth";
+const googleOauth_1 = __importDefault(require("./lib/auth/googleOauth"));
 const expressServer = (0, express_1.default)();
 exports.expressServer = expressServer;
 const httpServer = (0, http_1.createServer)(expressServer);
 exports.httpServer = httpServer;
 const whitelist = [process.env.FE_DEV_URL, process.env.FE_PROD_URL];
-// passport.use("google", googleStrategy);
+passport_1.default.use("google", googleOauth_1.default);
 //MIDDLEWARES
 expressServer.use((0, cors_1.default)({
     origin: (currentOrigin, corsNext) => {

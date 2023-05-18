@@ -31,10 +31,10 @@ igdbRouter.get("/genres", (req, res, next) => __awaiter(void 0, void 0, void 0, 
 }));
 igdbRouter.get("/genre/:genreId", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const response = yield axios_1.default.post(process.env.IGDB_URL + "/games", `fields: name, cover.url, rating, artworks.url, screenshots.url, genres.name, involved_companies.company.name, involved_companies.*, language_supports.language.name, platforms.abbreviation, platforms.name, platforms.platform_logo.url, similar_games.name, similar_games.cover.url, similar_games.rating, summary, videos.name, videos.video_id;
-        where genres = (${req.params.genreId}) & rating > 70;
-        limit 50;
-        sort rating desc;`, {
+        const response = yield axios_1.default.post(process.env.IGDB_URL + "/games", `fields: name, cover.url, rating, release_dates.human, artworks.url, screenshots.url, genres.name, involved_companies.company.name, involved_companies.*, language_supports.language.name, platforms.abbreviation, platforms.name, platforms.platform_logo.url, similar_games.name, similar_games.cover.url, similar_games.rating, summary, videos.name, videos.video_id;
+        where genres = (${req.params.genreId}) & rating > 1;
+        sort rating desc;
+        limit 50;`, {
             headers: {
                 "Client-ID": process.env.CLIENT_ID,
                 Authorization: `Bearer ${process.env.ADMIN_TOKEN}`,
@@ -48,10 +48,10 @@ igdbRouter.get("/genre/:genreId", (req, res, next) => __awaiter(void 0, void 0, 
 }));
 igdbRouter.get("/platform/:platformId", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const response = yield axios_1.default.post(process.env.IGDB_URL + "/games", `fields: name, cover.url, rating, artworks.url, screenshots.url, genres.name, involved_companies.company.name, involved_companies.*, language_supports.language.name, platforms.abbreviation, platforms.name, platforms.platform_logo.url, similar_games.name, similar_games.cover.url, similar_games.rating, summary, videos.name, videos.video_id;
-        where platforms = (${req.params.platformId}) & rating > 70;
-        limit 50;
-        sort rating desc;`, {
+        const response = yield axios_1.default.post(process.env.IGDB_URL + "/games", `fields: name, cover.url, rating, release_dates.human, artworks.url, screenshots.url, genres.name, involved_companies.company.name, involved_companies.*, language_supports.language.name, platforms.abbreviation, platforms.name, platforms.platform_logo.url, similar_games.name, similar_games.cover.url, similar_games.rating, summary, videos.name, videos.video_id;
+        where platforms = (${req.params.platformId}) & rating > 1;
+        sort rating desc;
+        limit 50;`, {
             headers: {
                 "Client-ID": process.env.CLIENT_ID,
                 Authorization: `Bearer ${process.env.ADMIN_TOKEN}`,
@@ -79,7 +79,9 @@ igdbRouter.get("/platforms", (req, res, next) => __awaiter(void 0, void 0, void 
 }));
 igdbRouter.get("/:where/search/:what", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const response = yield axios_1.default.post(process.env.IGDB_URL + "/" + req.params.where, `fields: name, cover.url, rating, artworks.url, screenshots.url, genres.name, involved_companies.company.name, involved_companies.*, language_supports.language.name, platforms.abbreviation, platforms.name, platforms.platform_logo.url, similar_games.name, similar_games.cover.url, similar_games.rating, summary, videos.name, videos.video_id; search: "${req.params.what}"; limit: 200;`, {
+        const response = yield axios_1.default.post(process.env.IGDB_URL + "/" + req.params.where, `fields: name, cover.url, rating, release_dates.human, artworks.url, screenshots.url, genres.name, involved_companies.company.name, involved_companies.*, language_supports.language.name, platforms.abbreviation, platforms.name, platforms.platform_logo.url, similar_games.name, similar_games.cover.url, similar_games.rating, summary, videos.name, videos.video_id;
+        search: "${req.params.what}";
+        limit: 200;`, {
             headers: {
                 "Client-ID": process.env.CLIENT_ID,
                 Authorization: `Bearer ${process.env.ADMIN_TOKEN}`,
@@ -93,7 +95,7 @@ igdbRouter.get("/:where/search/:what", (req, res, next) => __awaiter(void 0, voi
 }));
 igdbRouter.get("/game/:gameId", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const response = yield axios_1.default.post(process.env.IGDB_URL + "/games", `fields: name, cover.url, rating, artworks.url, screenshots.url, genres.name, involved_companies.company.name, involved_companies.*, language_supports.language.name, platforms.abbreviation, platforms.name, platforms.platform_logo.url, similar_games.name, similar_games.cover.url, similar_games.rating, summary, videos.name, videos.video_id;
+        const response = yield axios_1.default.post(process.env.IGDB_URL + "/games", `fields: name, cover.url, rating, release_dates.human, artworks.url, screenshots.url, genres.name, involved_companies.company.name, involved_companies.*, language_supports.language.name, platforms.abbreviation, platforms.name, platforms.platform_logo.url, similar_games.name, similar_games.cover.url, similar_games.rating, summary, videos.name, videos.video_id;
         where id = ${req.params.gameId};`, {
             headers: {
                 "Client-ID": process.env.CLIENT_ID,
@@ -108,10 +110,10 @@ igdbRouter.get("/game/:gameId", (req, res, next) => __awaiter(void 0, void 0, vo
 }));
 igdbRouter.get("/discover", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const response = yield axios_1.default.post(process.env.IGDB_URL + "/games", `fields: name, cover.url, rating, artworks.url, screenshots.url, genres.name, involved_companies.company.name, involved_companies.*, language_supports.language.name, platforms.abbreviation, platforms.name, platforms.platform_logo.url, similar_games.name, similar_games.cover.url, similar_games.rating, summary, videos.name, videos.video_id;
+        const response = yield axios_1.default.post(process.env.IGDB_URL + "/games", `fields: name, cover.url, rating, release_dates.human, artworks.url, screenshots.url, genres.name, involved_companies.company.name, involved_companies.*, language_supports.language.name, platforms.abbreviation, platforms.name, platforms.platform_logo.url, similar_games.name, similar_games.cover.url, similar_games.rating, summary, videos.name, videos.video_id;
       where release_dates.date >= 1672534861 & rating > 90;
-      limit 5;
-      sort rating desc;`, {
+      sort rating desc;
+      limit 5;`, {
             headers: {
                 "Client-ID": process.env.CLIENT_ID,
                 Authorization: `Bearer ${process.env.ADMIN_TOKEN}`,
