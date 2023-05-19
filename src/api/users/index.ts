@@ -143,7 +143,7 @@ usersRouter.get(
   (req: any, res: Response, next: NextFunction) => {
     try {
       res.cookie("accessToken", req.user!.accessToken);
-      res.redirect(`${process.env.FE_DEV_URL}`);
+      res.redirect(`${process.env.FE_PROD_URL}`);
     } catch (error) {
       next(error);
     }
