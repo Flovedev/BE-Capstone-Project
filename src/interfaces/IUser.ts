@@ -7,6 +7,7 @@ export interface IUser {
   avatar?: string;
   background?: string;
   info?: string;
+  native: boolean;
   games?: {
     favourites?: IOver[];
     pending?: IOver[];

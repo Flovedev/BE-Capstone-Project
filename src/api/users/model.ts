@@ -10,6 +10,7 @@ const UsersSchema = new Schema(
     email: { type: String, require: true },
     password: { type: String, require: false },
     info: { type: String, default: "Ey listen! I'm new here!" },
+    native: { type: Boolean, defailt: false },
     avatar: {
       type: String,
       default:

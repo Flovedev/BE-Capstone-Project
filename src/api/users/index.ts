@@ -29,7 +29,11 @@ usersRouter.get(
 usersRouter.get("/me", JWTAuthMiddleware, async (req: any, res, next) => {
   try {
     const user = await UsersModel.findById(req.user!._id);
-    res.send(user);
+    if (!user) {
+      next(createHttpError(404, `User doesn't exist.`));
+    } else {
+      res.send(user);
+    }
   } catch (error) {
     next(error);
   }
@@ -56,9 +60,9 @@ usersRouter.put(
       });
 
       if (req.body.password) {
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(req.body.password, salt);
-        // console.log("hashed pass", hashedPassword);
+        const plainPW = req.body.password;
+        const hashedPassword = await bcrypt.hash(plainPW!, 11);
+
         updatedUser.password = hashedPassword;
       }
       const savedUser = await updatedUser.save();
@@ -120,7 +124,8 @@ usersRouter.post(
           createHttpError(404, `Email ${req.body.email} is already in use!`)
         );
       } else {
-        const newUser = new UsersModel(req.body);
+        const newNative = { ...req.body, native: true };
+        const newUser = new UsersModel(newNative);
         const { _id } = await newUser.save();
         const payload = { _id: _id };
         const accessToken = await createAccessToken(payload);
