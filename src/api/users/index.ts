@@ -18,7 +18,35 @@ usersRouter.get(
   "/",
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const users = await UsersModel.find();
+      const users = await UsersModel.find().select("-email -social -native");
+      res.send(users);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+usersRouter.get(
+  "/single/:userId",
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const users = await UsersModel.findById(req.params.userId).select(
+        "-email -social -native"
+      );
+      res.send(users);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+usersRouter.get(
+  "/find/:search",
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const users = await UsersModel.find({
+        username: { $regex: req.params.search, $options: "i" },
+      }).select("-email -social -native");
       res.send(users);
     } catch (error) {
       next(error);
